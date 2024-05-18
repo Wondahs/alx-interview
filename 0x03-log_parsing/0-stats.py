@@ -29,24 +29,25 @@ status_code_dict = {
 total_filesize = 0
 count = 0
 result = []
-for line in sys.stdin:
-    pattern = r"^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - (\[\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}\.\d{6}\]) (\"GET \/projects\/260 HTTP\/1.1\" \w* \w*)$"
-    if re.match(pattern, line):
-        count += 1
-        split_content = line.split()
-        status_code = split_content[-2]
-        file_size = split_content[8] if len(split_content) > 8 else None
-        #print("You have printed {} {}".format(status_code, file_size))
-        result.append(status_code)
-        total_filesize += int(file_size) if type(int(file_size)) is int else 0
-        if count == 10:
-            print("File size:",total_filesize)
-            details = Counter(result)
-            sorted_keys = sorted(details.keys())
-            for key in sorted_keys:
-                status_code_dict[key] += details[key]
-            for key, value in status_code_dict.items():
-                if value > 0:
-                    print(f"{key}: {value}")
-            count = 0
-            result = []
+try:
+    for line in sys.stdin:
+        pattern = r"^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - (\[\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}\.\d{6}\]) (\"GET \/projects\/260 HTTP\/1.1\" \w* \w*)$"
+        if re.match(pattern, line):
+            split_content = line.split()
+            status_code = split_content[-2]
+            if type(eval(status_code)) is not int:
+                continue
+            file_size = split_content[-1]
+            if status_code in status_code_dict:
+                status_code_dict[status_code] += 1
+            total_filesize += int(file_size) if type(eval(file_size)) is int else 0
+            count += 1
+            if count % 10 == 0:
+                print("File size:",total_filesize)
+                for key, value in status_code_dict.items():
+                    if value > 0:
+                        print(f"{key}: {value}")
+                result = []
+except (KeyboardInterrupt, EOFError):
+    print("File size:",total_filesize  if total_filesize else "")
+    print(f"{key}: {value}"  if (key and value) else "")
