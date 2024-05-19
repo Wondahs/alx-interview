@@ -13,7 +13,6 @@ format: <status code>: <number>
 status codes should be printed in ascending order'''
 import re
 import sys
-from collections import Counter
 
 
 status_code_dict = {
@@ -29,6 +28,7 @@ status_code_dict = {
 total_filesize = 0
 count = 0
 result = []
+printed = False
 try:
     for line in sys.stdin:
         pattern = r"^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - (\[\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}\.\d{6}\]) (\"GET \/projects\/260 HTTP\/1.1\" \w* \w*)$"
