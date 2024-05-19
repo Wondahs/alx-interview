@@ -48,6 +48,15 @@ try:
                     if value > 0:
                         print(f"{key}: {value}")
                 result = []
+                printed = True
 except (KeyboardInterrupt, EOFError):
-    print("File size:",total_filesize  if total_filesize else "")
-    print(f"{key}: {value}"  if (key and value) else "")
+    print("File size:",total_filesize)
+    for key, value in status_code_dict.items():
+        if value > 0:
+            print(f"{key}: {value}")
+    printed = True
+if not printed:
+    print("File size:",total_filesize)
+    for key, value in status_code_dict.items():
+        if value > 0:
+            print(f"{key}: {value}")
