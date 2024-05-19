@@ -18,6 +18,13 @@ total_filesize = 0
 count = 0
 result = []
 printed = False
+
+def print_metrics():
+    '''Prints the current metrics'''
+    print(f"File size: {total_filesize}")
+    for key, value in status_code_dict.items():
+        if value > 0:
+            print(f"{key}: {value}")
 try:
     for line in sys.stdin:
         pattern = r"^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - "
@@ -34,20 +41,10 @@ try:
             total_filesize += int(file_size)
             count += 1
             if count % 10 == 0:
-                print(f"File size: {total_filesize}")
-                for key, value in status_code_dict.items():
-                    if value > 0:
-                        print(f"{key}: {value}")
+                print_metrics()
                 result = []
                 printed = True
-except (KeyboardInterrupt, EOFError):
-    print(f"File size: {total_filesize}")
-    for key, value in status_code_dict.items():
-        if value > 0:
-            print(f"{key}: {value}")
-    printed = True
+except (KeyboardInterrupt, EOFError) as e:
+    print_metrics()
 if not printed:
-    print(f"File size: {total_filesize}")
-    for key, value in status_code_dict.items():
-        if value > 0:
-            print(f"{key}: {value}")
+    print_metrics()
