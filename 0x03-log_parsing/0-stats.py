@@ -29,7 +29,7 @@ def print_metrics():
 
 try:
     for line in sys.stdin:
-        pattern = r"^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - "
+        pattern = r"^((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+)\s*-\s*"
         pattern += r"(\[\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}\.\d{6}\]) "
         pattern += r"(\"GET \/projects\/260 HTTP\/1.1\" \d+ \d+)$"
         if re.match(pattern, line):
