@@ -31,18 +31,21 @@ try:
     for line in sys.stdin:
         pattern = r"^((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+)\s*-\s*"
         pattern += r"(\[\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}\.\d{6}\]) "
-        pattern += r"(\"GET \/projects\/260 HTTP\/1.1\" \d+ \d+)$"
+        pattern += r"(\"GET \/projects\/260 HTTP\/1.1\" \w+ \d+)$"
         if re.match(pattern, line):
             split_content = line.split()
             status_code = split_content[-2]
-            if type(eval(status_code)) is not int:
-                continue
             file_size = split_content[-1]
+            pattern = r"\d+"
+            if not re.match(pattern, file_size):
+                total_filesize += int(file_size)
+                count += 1
+                continue
             if status_code in status_code_dict:
                 status_code_dict[status_code] += 1
             total_filesize += int(file_size)
             count += 1
-            if count % 10 == 0:
+            if not count % 10:
                 print_metrics()
                 result = []
 except (KeyboardInterrupt, EOFError) as e:
