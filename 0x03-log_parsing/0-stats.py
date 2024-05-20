@@ -17,7 +17,6 @@ status_code_dict = {
 total_filesize = 0
 count = 0
 result = []
-printed = False
 
 def print_metrics():
     '''Prints the current metrics'''
@@ -43,8 +42,8 @@ try:
             if count % 10 == 0:
                 print_metrics()
                 result = []
-                printed = True
 except (KeyboardInterrupt, EOFError) as e:
     print_metrics()
-if not printed:
-    print_metrics()
+    sys.exit()
+
+print_metrics()
