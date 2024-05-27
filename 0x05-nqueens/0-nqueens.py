@@ -1,13 +1,16 @@
 #!/usr/bin/python3
 '''N-Queens Problem'''
 import sys
+from typing import List
 
 def exit_seq(msg: str):
 	'''Prints message and exits with status 1'''
 	print(msg)
 	sys.exit(1)
 
-def
+def is_safe(pos: List[int], solution: List[List[int]]):
+	'''Checks if a position is safe'''
+	
 
 if __name__ == '__main__':
 	args = sys.argv
