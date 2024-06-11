@@ -16,7 +16,6 @@ status_code_dict = {
         }
 total_filesize = 0
 count = 0
-result = []
 
 
 def print_metrics():
@@ -47,7 +46,6 @@ try:
             count += 1
             if not count % 10:
                 print_metrics()
-                result = []
 except (KeyboardInterrupt, EOFError) as e:
     print_metrics()
     sys.exit()
