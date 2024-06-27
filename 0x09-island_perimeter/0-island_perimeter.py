@@ -2,25 +2,31 @@
 '''Island perimeter module'''
 
 
+from sqlalchemy import column
+
+
 def island_perimeter(grid):
     '''Island perimeter function'''
     if not grid:
         return 0
-    length = len(grid[0])
-    i_breadth = 0
-    i_length = 0
+    row = len(grid)
+    column = len(grid[0])
+    perimeter = 0
 
-    for i in range(length - 1):
-        length_counter = 0
-        for j in range(length - 1):
-            length_counter = length_counter + 1 \
-                if grid[i][j] else length_counter
-        for j in range(length - 1):
+    for i in range(row):
+        for j in range(column):
+            square = 4
             if grid[i][j]:
-                i_breadth += 1
-                break
-        i_length = length_counter \
-            if length_counter > i_length else i_length
-
-    perimeter = 2 * (i_length + i_breadth)
+                try:
+                    if j < column - 1 and grid[i][j + 1]:
+                        square -= 1
+                    if j > 0 and grid[i][j - 1]:
+                        square -= 1
+                    if i < row - 1 and grid[i + 1][j]:
+                        square -= 1
+                    if i > 0 and grid[i - 1][j]:
+                        square -= 1
+                except IndexError:
+                    pass
+                perimeter += square
     return perimeter
