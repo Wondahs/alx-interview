@@ -2,9 +2,6 @@
 '''Island perimeter module'''
 
 
-from sqlalchemy import column
-
-
 def island_perimeter(grid):
     '''Island perimeter function'''
     if not grid:
