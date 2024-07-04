@@ -95,11 +95,10 @@ def isWinner(x: int, nums: list) -> str:
          returns None.
 
     """
-    if not nums or not x:
+    if not nums or len(nums) < 1 or not x or x < 1:
         return None
 
-    benWins = 0
-    MariaWins = 0
+    benWins, MariaWins = 0, 0
 
     try:
         for i in range(x):
